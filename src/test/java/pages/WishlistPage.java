@@ -16,7 +16,6 @@ public class WishlistPage extends BasePage {
         return this;
     }
 
-    
     @Override
     public BasePage isPageOpened() {
         $(byName("subscribe")).waitUntil(Condition.visible, 30000);
