@@ -36,6 +36,7 @@ public class DoneTheDealTest extends BaseTest {
     }
 
     @Test
+    @Description("Проверка нажатия на дизлайк. Сравнение кол-ва лайков до и после нажатия")
     public void thumbDown() {
         Product liquid = new Product("Liquid Calcium with Magnesium, Natural Orange Flavor", "$15.36");
         feedPage
