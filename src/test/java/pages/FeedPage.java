@@ -2,6 +2,7 @@ package pages;
 
 import com.codeborne.selenide.Condition;
 import models.Product;
+import models.User;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selectors.*;
@@ -38,9 +39,9 @@ public class FeedPage extends BasePage {
         return this;
     }
 
-    public FeedPage fillInLoginFields(String login, String password) {
-        $(By.xpath(LOGIN_INPUT_LOCATOR)).setValue(login);
-        $(By.xpath(PASSWORD_INPUT_LOCATOR)).setValue(password);
+    public FeedPage fillInLoginFields(User user) {
+        $(By.xpath(LOGIN_INPUT_LOCATOR)).setValue(user.getUsername());
+        $(By.xpath(PASSWORD_INPUT_LOCATOR)).setValue(user.getPassword());
         $(By.xpath(SUBMIT_BUTTON_LOCATOR)).click();
         return this;
     }
@@ -50,6 +51,16 @@ public class FeedPage extends BasePage {
         feedPage.isPageOpened();
         assertEquals(0, $$("[data-type=login]").size(), "Кнопка логина не исчезла после входа в приложение");
         return this;
+    }
+
+    public FeedPage openDropDown() {
+        $(".user-ava-intop").click();
+        return this;
+    }
+
+    public UserProfilePage openUserProfile() {
+        $(byText("Edit Profile")).click();
+        return new UserProfilePage();
     }
 
     public FeedPage validateIncorrectLoginWarning (String expectedWarning) {

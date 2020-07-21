@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 
 import static com.codeborne.selenide.Selectors.byName;
+import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 
 public class ProductPage extends BasePage {
@@ -29,10 +30,19 @@ public class ProductPage extends BasePage {
         return this;
     }
 
+    public WishlistPage openWishList () {
+        $(byText("Your wishlist")).click();
+        return new WishlistPage();
+    }
+
     public ProductPage validateAddingToFavorites() {
-        $(".loading").waitUntil(Condition.disappear, 30000);
         String actualValueOfButton = $(".heartplus").getText();
         Assert.assertEquals("Saved", actualValueOfButton, "текст не совпадает");
+        return this;
+    }
+
+    public ProductPage waitUntilProductIsSaved() {
+        $(".loading").waitUntil(Condition.disappear, 30000);
         return this;
     }
 
