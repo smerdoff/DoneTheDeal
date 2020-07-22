@@ -12,6 +12,7 @@ import static com.codeborne.selenide.Selenide.$;
 public class ProductPage extends BasePage {
     private final static String PRODUCT_NAME_LOCATOR = "//div[@class = 'single_top_main']//h1";
     private final static String PRODUCT_PRICE_LOCATOR = ".rh_regular_price";
+    private final static String SAVED_BUTTON = "//div[@class='single_top_main']//span[@class='alreadywish heartplus']";
 
     @Override
     public BasePage openPage() {
@@ -25,8 +26,9 @@ public class ProductPage extends BasePage {
         return this;
     }
 
-    public ProductPage addToFavorites() {
+    public ProductPage clickAddToFavorites() {
         $(".heartplus").click();
+        $(".loading").waitUntil(Condition.disappear, 30000);
         return this;
     }
 
@@ -35,14 +37,12 @@ public class ProductPage extends BasePage {
         return new WishlistPage();
     }
 
-    public ProductPage validateAddingToFavorites() {
+    public ProductPage saveButtonIsClicked() {
         String actualValueOfButton = $(".heartplus").getText();
-        Assert.assertEquals("Saved", actualValueOfButton, "текст не совпадает");
-        return this;
-    }
-
-    public ProductPage waitUntilProductIsSaved() {
-        $(".loading").waitUntil(Condition.disappear, 30000);
+        if (actualValueOfButton == "Save") {
+            clickAddToFavorites();
+        }
+        Assert.assertEquals(actualValueOfButton, "Saved", "текст не совпадает");
         return this;
     }
 

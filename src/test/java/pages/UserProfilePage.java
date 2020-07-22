@@ -22,23 +22,23 @@ public class UserProfilePage extends BasePage {
     }
 
     public UserProfilePage postWhatsNew(String text) {
-        int countOfPostsAfter = $$(".activity-item").size();
+        int countOfPostsBefore = $$(".activity-item").size();
         $(byText("Post what's new")).click();
         $(byId("whats-new")).sendKeys(text);
         $("input[value='Post Update']").click();
         $(".loading").waitUntil(Condition.disappear, 30000);
-        int countOfPostsBefore = $$(".activity-item").size();
-        String textInTopPost = $(".activity-inner").getText();
-        Assert.assertEquals(countOfPostsAfter+1,countOfPostsBefore,"Пост не добавлен");
-        Assert.assertEquals(text,textInTopPost,"Текст в верхнем посте отличается от отправленного");
+        int countOfPostsAfter = $$(".activity-item").size();
+        Assert.assertEquals(countOfPostsAfter,countOfPostsBefore+1,"Пост не добавлен");
         return this;
     }
 
     public UserProfilePage deleteActivity() {
         int countOfItemsBefore = $$(".activity-item").size();
         $(".delete-activity").click();
+        $(".loading").waitUntil(Condition.disappear, 30000);
+        refresh();
         int countOfItemsAfter = $$(".activity-item").size();
-        Assert.assertEquals(countOfItemsBefore-1, countOfItemsAfter,"Активити не удалена");
+        Assert.assertEquals(countOfItemsAfter, countOfItemsBefore-1,"Активити не удалена");
         return this;
 
     }

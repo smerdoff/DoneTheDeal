@@ -27,12 +27,15 @@ public class WishlistPage extends BasePage {
         return this;
     }
 
-    public WishlistPage validateProduct(Product product) {
+    public WishlistPage validateProductIsAdded(Product product) {
         Product expectedProduct = Product.builder()
                 .productName($(By.xpath("//div[@class='rowdisplay']//div[3]//a")).getText())
                 .price($(".rh_regular_price").getText())
                 .build();
         Assert.assertEquals(expectedProduct, product, "Детали продукта не совпадают");
+        By removeButton = By.xpath(String.format(REMOVE_BUTTON, product.getProductName()));
+        $(removeButton).click();
+        $(".loading").waitUntil(Condition.disappear, 30000);
         return this;
     }
 

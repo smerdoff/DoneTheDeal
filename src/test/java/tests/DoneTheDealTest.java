@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 import pages.FeedPage;
 
 public class DoneTheDealTest extends BaseTest {
-    @Test
+    @Test()
     @Description("Проверка ввода корректных кредов в окне логина. Если пользователь войдёт в приложение, то кнопка Login должна исчезнуть")
     public void correctLogin(){
         User user = new User("eugene","password");
@@ -27,7 +27,7 @@ public class DoneTheDealTest extends BaseTest {
                 .validateIncorrectLoginWarning("Unknown username. Check again or try your email address.");
     }
 
-    @Test
+    @Test(enabled = false)
     @Description("Проверка нажатия на лайк. Сравнение кол-ва лайков до и после нажатия")
     public void thumbUp() {
         User user = new User("eugene","password");
@@ -39,7 +39,7 @@ public class DoneTheDealTest extends BaseTest {
                 .thumbUpDown(oil, true);
     }
 
-    @Test
+    @Test(enabled = false)
     @Description("Проверка нажатия на дизлайк. Сравнение кол-ва лайков до и после нажатия")
     public void thumbDown() {
         User user = new User("eugene","password");
@@ -51,15 +51,16 @@ public class DoneTheDealTest extends BaseTest {
                 .thumbUpDown(liquid, false);
     }
 
-    @Test
-    @Description("Проверка добавления продукта в вишлист")
+    @Test(description = "кнопка должна измениться на SAVED")
+    @Description("Проверка нажатия на кнопку ДОБАВИТЬ В вишлист")
     public void clickTheAddToWish() {
         Product liquid = new Product("Liquid Calcium with Magnesium, Natural Orange Flavor", "$15.36");
         feedPage
                 .openPage()
                 .openProductPage(liquid)
-                .addToFavorites()
-                .validateAddingToFavorites();
+                .clickAddToFavorites()
+                .saveButtonIsClicked()
+                .clickAddToFavorites();
     }
 
     @Test
@@ -69,21 +70,19 @@ public class DoneTheDealTest extends BaseTest {
         feedPage
                 .openPage()
                 .openProductPage(oil)
-                .waitUntilProductIsSaved()
                 .validateProductDetails(oil);
     }
 
     @Test
     @Description("Проверка добавления продукта в вишлист")
-    public void wishlistValidation() {
+    public void addToWishList() {
         Product pectin = new Product("Apple Pectin, 700 mg", "$10.18");
         feedPage
                 .openPage()
                 .openProductPage(pectin)
-                .addToFavorites()
-                .waitUntilProductIsSaved()
+                .clickAddToFavorites()
                 .openWishList()
-                .validateProduct(pectin);
+                .validateProductIsAdded(pectin);
     }
 
     @Test
@@ -93,13 +92,12 @@ public class DoneTheDealTest extends BaseTest {
         feedPage
                 .openPage()
                 .openProductPage(conditioner)
-                .addToFavorites()
-                .waitUntilProductIsSaved()
+                .clickAddToFavorites()
                 .openWishList()
                 .removeFromWishlist(conditioner);
     }
 
-    @Test(description = "Валидация изменения кол-ва постов. Проверка текста в верхнем посте" )
+    @Test(description = "Валидация изменения кол-ва постов. Проверка текста в верхнем посте")
     @Description("Создание и отправка нового поста в UserProfile")
     public void postActivity() {
         User user = new User("eugene2","password");
