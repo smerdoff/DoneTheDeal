@@ -9,7 +9,7 @@ import org.testng.Assert;
 import static com.codeborne.selenide.Selectors.byName;
 import static com.codeborne.selenide.Selenide.*;
 
-
+@Log4j2
 public class WishlistPage extends BasePage {
     private static final String REMOVE_BUTTON = "//*[text() = ' %s ']//../..//*[@class='alreadywish heartplus']";
 
@@ -28,7 +28,7 @@ public class WishlistPage extends BasePage {
     }
 
     public WishlistPage validateProductIsAdded(Product product) {
-
+        log.debug("DEBUG");
         Product expectedProduct = Product.builder()
                 .productName($(By.xpath("//div[@class='rowdisplay']//div[3]//a")).getText())
                 .price($(".rh_regular_price").getText())
@@ -41,6 +41,7 @@ public class WishlistPage extends BasePage {
     }
 
     public WishlistPage removeFromWishlist(Product product) {
+        log.debug("DEBUG");
         int countOfProductsBefore= $$(".rowdisplay").size();
         By removeButton = By.xpath(String.format(REMOVE_BUTTON, product.getProductName()));
         $(removeButton).click();

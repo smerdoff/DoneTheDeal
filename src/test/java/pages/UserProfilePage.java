@@ -1,12 +1,13 @@
 package pages;
 
 import com.codeborne.selenide.Condition;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
-
+@Log4j2
 public class UserProfilePage extends BasePage {
 
     @Override
@@ -22,6 +23,7 @@ public class UserProfilePage extends BasePage {
     }
 
     public UserProfilePage postWhatsNew(String text) {
+        log.debug("DEBUG");
         int countOfPostsBefore = $$(".activity-item").size();
         $(byText("Post what's new")).click();
         $(byId("whats-new")).sendKeys(text);
@@ -33,6 +35,7 @@ public class UserProfilePage extends BasePage {
     }
 
     public UserProfilePage deleteActivity() {
+        log.debug("DEBUG");
         if($(".load-more").isDisplayed()==true){
             $(".load-more").click();
             $(".loading").waitUntil(Condition.disappear, 30000);

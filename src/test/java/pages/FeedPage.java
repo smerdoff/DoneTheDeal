@@ -44,6 +44,7 @@ public class FeedPage extends BasePage {
     }
 
     public FeedPage fillInLoginFields(User user) {
+        log.debug("DEBUG");
         $(By.xpath(LOGIN_INPUT_LOCATOR)).setValue(user.getUsername());
         $(By.xpath(PASSWORD_INPUT_LOCATOR)).setValue(user.getPassword());
         $(By.xpath(SUBMIT_BUTTON_LOCATOR)).click();
@@ -83,8 +84,8 @@ public class FeedPage extends BasePage {
     }
 
     public FeedPage validateBestRatedProducts() {
+        log.debug("DEBUG");
         for(int i = 1; i<=6; i++){
-            log.debug("DEBUG");
             By productLikeLocator= By.xpath(String.format(MOST_HOT_PRODUCTS_RATE_LOCATOR, i));
             String productLikesCount= $(productLikeLocator).getText();
             By dealsLikesLocator = By.xpath(String.format(MOST_HOT_DEALS_RATE_LOCATOR, i));

@@ -23,6 +23,7 @@ public class PostPage extends BasePage {
     }
 
     public PostPage addAComment(String text) {
+        log.debug("DEBUG");
         $(".acomment-reply").click();
         $("textarea").sendKeys(text);
         $(byName("ac_form_submit")).click();
@@ -34,6 +35,7 @@ public class PostPage extends BasePage {
     }
 
     public PostPage deleteAComment() {
+        log.debug("DEBUG");
         log.debug("DEBUG");
         int countOfComments = $$(".acomment-meta").size();
         $(byXpath("(//div[@class='acomment-options']//a[text()='Delete'])[last()]")).click();
