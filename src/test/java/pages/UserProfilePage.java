@@ -17,7 +17,7 @@ public class UserProfilePage extends BasePage {
 
     @Override
     public BasePage isPageOpened() {
-        $(By.xpath("//*[@class='delete-activity confirm'][last()]")).waitUntil(Condition.visible,30000);
+        $(By.xpath("(//*[@class='delete-activity confirm'])[last()]")).waitUntil(Condition.visible,30000);
         return this;
     }
 
@@ -40,6 +40,12 @@ public class UserProfilePage extends BasePage {
         int countOfItemsAfter = $$(".activity-item").size();
         Assert.assertEquals(countOfItemsAfter, countOfItemsBefore-1,"Активити не удалена");
         return this;
-
     }
+
+    public PostPage openPostPage() {
+        $(".time-since").click();
+        return new PostPage();
+    }
+
+
 }

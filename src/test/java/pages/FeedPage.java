@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import models.Product;
 import models.User;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
@@ -16,9 +17,11 @@ public class FeedPage extends BasePage {
     private static final String SUBMIT_BUTTON_LOCATOR = "//div[@class='pm-content']//button";
     private static final String WARNING_LOCATOR = "//div[@class='pm-content']//i//..";
     private static final String PRODUCT_LOCATOR = "//div[@data-template = 'compact_grid']//*[text()='%s']";
-    private static final String LIKE_COUNT_LOCATOR = ("//div[@data-template = 'compact_grid']//*[text()='%s']//..//..//..//../..//span[@class='thumbscount']");
+    private static final String LIKE_COUNT_LOCATOR = "//div[@data-template = 'compact_grid']//*[text()='%s']//..//..//..//../..//span[@class='thumbscount']";
     private static final String THUMB_UP_BUTTON_LOCATOR = ("//div[@data-template = 'compact_grid']//*[text()='%s']//..//..//..//../..//div[@class='btn_act_for_grid']//span[@class = 'table_cell_thumbs']//span[2]");
     private static final String THUMB_DOWN_BUTTON_LOCATOR = ("//div[@data-template = 'compact_grid']//*[text()='%s']//..//..//..//../..//div[@class='btn_act_for_grid']//span[@class = 'table_cell_thumbs']//span[1]");
+    private static final String MOST_HOT_DEALS_RATE_LOCATOR = "(//div[@data-template='simplepostlist']//*[@class='temperatur'])[%s]";
+    private static final String MOST_HOT_PRODUCTS_RATE_LOCATOR = "(//span[@class='thumbscount'])[%s]";
 
 
     @Override
@@ -69,13 +72,20 @@ public class FeedPage extends BasePage {
         return this;
     }
 
-    public WishlistPage openWishList () {
-        $(byText("Your wishlist")).click();
-        return new WishlistPage();
-    }
-
     public FeedPage clickMostHot() {
         $(byText("Most Hot")).click();
+        $(byXpath("//*[@class='re_filtersort_btn resort_1 active']")).waitUntil(Condition.appears,10000);
+        return this;
+    }
+
+    public FeedPage validateBestRatedProducts() {
+        for(int i = 1; i<=6; i++){
+            By productLikeLocator= By.xpath(String.format(MOST_HOT_PRODUCTS_RATE_LOCATOR, i));
+            String productLikesCount= $(productLikeLocator).getText();
+            By dealsLikesLocator = By.xpath(String.format(MOST_HOT_DEALS_RATE_LOCATOR, i));
+            String dealLikeCount = $(dealsLikesLocator).getText();
+            Assert.assertEquals(productLikesCount, dealLikeCount, "Значения лайков между самими рейтинговыми продуктами и панелью MOST HOT DEALS не совпадают ");
+        }
         return this;
     }
 

@@ -51,6 +51,15 @@ public class DoneTheDealTest extends BaseTest {
                 .thumbUpDown(liquid, false);
     }
 
+    @Test(description = "Проверка лайков между самыми рейтинговыми продуктами и панелью MOST HOT DEALS")
+    @Description("Проверка лайков между самыми рейтинговыми продуктами и панелью MOST HOT DEALS")
+    public void likesValidation() {
+        feedPage
+                .openPage()
+                .clickMostHot()
+                .validateBestRatedProducts();
+    }
+
     @Test(description = "кнопка должна измениться на SAVED")
     @Description("Проверка нажатия на кнопку ДОБАВИТЬ В вишлист")
     public void clickTheAddToWish() {
@@ -71,6 +80,19 @@ public class DoneTheDealTest extends BaseTest {
                 .openPage()
                 .openProductPage(oil)
                 .validateProductDetails(oil);
+    }
+
+    @Test
+    @Description("Добавление комментария")
+    public void addAComment() {
+        User user = new User("eugene2","password");
+        Product oil = new Product("Plant-Based Daily Superfood + Probiotics and Digestive Enzymes", "$64.56");
+        feedPage
+                .openPage()
+                .openLoginGate()
+                .fillInLoginFields(user)
+                .openProductPage(oil)
+                .addAComment("Text");
     }
 
     @Test
@@ -122,6 +144,50 @@ public class DoneTheDealTest extends BaseTest {
                 .openUserProfile()
                 .deleteActivity();
     }
+
+    @Test
+    @Description("Добавление коммента к посту")
+    public void addACommentToPost() {
+        User user = new User("eugene2","password");
+        feedPage
+                .openPage()
+                .openLoginGate()
+                .fillInLoginFields(user)
+                .openDropDown()
+                .openUserProfile()
+                .openPostPage()
+                .addAComment("New comment233");
+    }
+
+    @Test
+    @Description("Удаление коммента в посте")
+    public void deleteACommentInPost() {
+        User user = new User("eugene2","password");
+        feedPage
+                .openPage()
+                .openLoginGate()
+                .fillInLoginFields(user)
+                .openDropDown()
+                .openUserProfile()
+                .openPostPage()
+                .addAComment("New comment233")
+                .deleteAComment();
+    }
+
+    @Test
+    @Description
+    public void addPostToFavorites() {
+        User user = new User("eugene2","password");
+        feedPage
+                .openPage()
+                .openLoginGate()
+                .fillInLoginFields(user)
+                .openDropDown()
+                .openUserProfile()
+                .openPostPage()
+                .clickFavorite();
+    }
+
 
 
 }
