@@ -33,10 +33,18 @@ public class UserProfilePage extends BasePage {
     }
 
     public UserProfilePage deleteActivity() {
+        if($(".load-more").isDisplayed()==true){
+            $(".load-more").click();
+            $(".loading").waitUntil(Condition.disappear, 30000);
+        }
         int countOfItemsBefore = $$(".activity-item").size();
         $(".delete-activity").click();
         $(".loading").waitUntil(Condition.disappear, 30000);
         refresh();
+        if($(".load-more").isDisplayed()==true){
+            $(".load-more").click();
+            $(".loading").waitUntil(Condition.disappear, 30000);
+        }
         int countOfItemsAfter = $$(".activity-item").size();
         Assert.assertEquals(countOfItemsAfter, countOfItemsBefore-1,"Активити не удалена");
         return this;

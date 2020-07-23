@@ -1,6 +1,7 @@
 package pages;
 
 import com.codeborne.selenide.Condition;
+import lombok.extern.log4j.Log4j2;
 import models.Product;
 import models.User;
 import org.openqa.selenium.By;
@@ -9,7 +10,7 @@ import org.testng.Assert;
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
 import static org.testng.Assert.assertEquals;
-
+@Log4j2
 public class FeedPage extends BasePage {
 
     private static final String LOGIN_INPUT_LOCATOR = "//div[@class='pm-content']//input[@name='rehub_user_login']";
@@ -57,16 +58,19 @@ public class FeedPage extends BasePage {
     }
 
     public FeedPage openDropDown() {
+        log.debug("DEBUG");
         $(".user-ava-intop").click();
         return this;
     }
 
     public UserProfilePage openUserProfile() {
+        log.debug("DEBUG");
         $(byText("Edit Profile")).click();
         return new UserProfilePage();
     }
 
     public FeedPage validateIncorrectLoginWarning (String expectedWarning) {
+        log.debug("DEBUG");
         String actualWarning = $(By.xpath(WARNING_LOCATOR)).getText();
         assertEquals(expectedWarning, actualWarning, "Ворнинги не совпадают");
         return this;
@@ -80,6 +84,7 @@ public class FeedPage extends BasePage {
 
     public FeedPage validateBestRatedProducts() {
         for(int i = 1; i<=6; i++){
+            log.debug("DEBUG");
             By productLikeLocator= By.xpath(String.format(MOST_HOT_PRODUCTS_RATE_LOCATOR, i));
             String productLikesCount= $(productLikeLocator).getText();
             By dealsLikesLocator = By.xpath(String.format(MOST_HOT_DEALS_RATE_LOCATOR, i));
@@ -90,6 +95,7 @@ public class FeedPage extends BasePage {
     }
 
     public ProductPage openProductPage(Product product) {
+        log.debug("DEBUG");
         By productPath = By.xpath(String.format(PRODUCT_LOCATOR, product.getProductName()));
         $(productPath).click();
         return new ProductPage();
@@ -97,6 +103,7 @@ public class FeedPage extends BasePage {
 
     public FeedPage thumbUpDown (Product product, boolean thumb) {
         isPageOpened();
+        log.debug("DEBUG");
         By likeCounter = By.xpath(String.format(LIKE_COUNT_LOCATOR,product.getProductName()));
         int expectedCount = Integer.parseInt($(likeCounter).getText());
         $(likeCounter).hover();

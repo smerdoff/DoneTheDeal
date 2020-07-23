@@ -1,10 +1,11 @@
 package tests;
 
 import io.qameta.allure.Description;
+import lombok.extern.log4j.Log4j2;
 import models.Product;
 import models.User;
 import org.testng.annotations.Test;
-import pages.FeedPage;
+
 
 public class DoneTheDealTest extends BaseTest {
     @Test()
@@ -86,7 +87,7 @@ public class DoneTheDealTest extends BaseTest {
     @Description("Добавление комментария")
     public void addAComment() {
         User user = new User("eugene2","password");
-        Product oil = new Product("Plant-Based Daily Superfood + Probiotics and Digestive Enzymes", "$64.56");
+        Product oil = new Product("Garlic Oil, 1500 mg", "$8.28");
         feedPage
                 .openPage()
                 .openLoginGate()
@@ -174,7 +175,7 @@ public class DoneTheDealTest extends BaseTest {
                 .deleteAComment();
     }
 
-    @Test
+    @Test()
     @Description
     public void addPostToFavorites() {
         User user = new User("eugene2","password");

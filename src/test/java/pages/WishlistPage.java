@@ -28,6 +28,7 @@ public class WishlistPage extends BasePage {
     }
 
     public WishlistPage validateProductIsAdded(Product product) {
+
         Product expectedProduct = Product.builder()
                 .productName($(By.xpath("//div[@class='rowdisplay']//div[3]//a")).getText())
                 .price($(".rh_regular_price").getText())
