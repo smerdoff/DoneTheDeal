@@ -87,7 +87,7 @@ public class DoneTheDealTest extends BaseTest {
     @Description("Добавление комментария")
     public void addAComment() {
         User user = new User("eugene2","password");
-        Product oil = new Product("Garlic Oil, 1500 mg", "$8.28");
+        Product oil = new Product("Apple Pectin, 700 mg", "$10.18");
         feedPage
                 .openPage()
                 .openLoginGate()
